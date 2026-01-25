@@ -17,9 +17,13 @@ export default function Navbar() {
     { name: "Academics", href: "#academics" },
     { name: "Admissions", href: "#admissions" },
     { name: "Contact", href: "#contact" },
+    { name: "Portal", href: "https://Tissangli.in", external: true },
   ];
 
-  const handleClick = (e, href) => {
+  const handleClick = (e, href, external) => {
+    if (external) {
+      return;
+    }
     e.preventDefault();
     const element = document.querySelector(href);
     if (element) {
@@ -51,8 +55,12 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              onClick={(e) => handleClick(e, link.href)}
+              onClick={(e) => handleClick(e, link.href, link.external)}
               className="text-xs xl:text-sm font-medium transition-colors hover:text-primary py-2 px-2 xl:px-0 whitespace-nowrap cursor-pointer"
+              {...(link.external && {
+                target: "_blank",
+                rel: "noopener noreferrer",
+              })}
             >
               {link.name}
             </a>
@@ -77,8 +85,12 @@ export default function Navbar() {
                   <SheetClose asChild key={link.name}>
                     <a
                       href={link.href}
-                      onClick={(e) => handleClick(e, link.href)}
+                      onClick={(e) => handleClick(e, link.href, link.external)}
                       className="text-base sm:text-lg font-medium text-gray-900 hover:text-primary py-3 px-4 rounded-lg hover:bg-secondary/50 transition-colors border-b border-gray-100 last:border-b-0 cursor-pointer"
+                      {...(link.external && {
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      })}
                     >
                       {link.name}
                     </a>
