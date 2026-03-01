@@ -11,17 +11,19 @@ import {
 
 export default function Navbar() {
   const navLinks = [
-    { name: "Home", href: "#hero" },
+    { name: "Home", href: "/", isRoute: true },
     { name: "About", href: "#about" },
     { name: "Why Us", href: "#why-us" },
     { name: "Academics", href: "#academics" },
+    { name: "Gallery", href: "/gallery", isRoute: true },
+    { name: "Faculty", href: "/faculty", isRoute: true },
     { name: "Admissions", href: "#admissions" },
     { name: "Contact", href: "#contact" },
     { name: "Portal", href: "https://Tissangli.in", external: true },
   ];
 
-  const handleClick = (e, href, external) => {
-    if (external) {
+  const handleClick = (e, href, external, isRoute) => {
+    if (external || isRoute) {
       return;
     }
     e.preventDefault();
@@ -51,20 +53,35 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex gap-1 xl:gap-6 items-center ml-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => handleClick(e, link.href, link.external)}
-              className="text-xs xl:text-sm font-medium transition-colors hover:text-primary py-2 px-2 xl:px-0 whitespace-nowrap cursor-pointer"
-              {...(link.external && {
-                target: "_blank",
-                rel: "noopener noreferrer",
-              })}
-            >
-              {link.name}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            if (link.isRoute) {
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-xs xl:text-sm font-medium transition-colors hover:text-primary py-2 px-2 xl:px-0 whitespace-nowrap cursor-pointer"
+                >
+                  {link.name}
+                </Link>
+              );
+            }
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) =>
+                  handleClick(e, link.href, link.external, link.isRoute)
+                }
+                className="text-xs xl:text-sm font-medium transition-colors hover:text-primary py-2 px-2 xl:px-0 whitespace-nowrap cursor-pointer"
+                {...(link.external && {
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                })}
+              >
+                {link.name}
+              </a>
+            );
+          })}
         </div>
 
         {/* Mobile Navigation (Sheet) */}
@@ -83,17 +100,28 @@ export default function Navbar() {
               <div className="flex flex-col space-y-2 mt-20 px-4 sm:px-6">
                 {navLinks.map((link) => (
                   <SheetClose asChild key={link.name}>
-                    <a
-                      href={link.href}
-                      onClick={(e) => handleClick(e, link.href, link.external)}
-                      className="text-base sm:text-lg font-medium text-gray-900 hover:text-primary py-3 px-4 rounded-lg hover:bg-secondary/50 transition-colors border-b border-gray-100 last:border-b-0 cursor-pointer"
-                      {...(link.external && {
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                      })}
-                    >
-                      {link.name}
-                    </a>
+                    {link.isRoute ? (
+                      <Link
+                        href={link.href}
+                        className="text-base sm:text-lg font-medium text-gray-900 hover:text-primary py-3 px-4 rounded-lg hover:bg-secondary/50 transition-colors border-b border-gray-100 last:border-b-0 cursor-pointer"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        onClick={(e) =>
+                          handleClick(e, link.href, link.external, link.isRoute)
+                        }
+                        className="text-base sm:text-lg font-medium text-gray-900 hover:text-primary py-3 px-4 rounded-lg hover:bg-secondary/50 transition-colors border-b border-gray-100 last:border-b-0 cursor-pointer"
+                        {...(link.external && {
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                        })}
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </SheetClose>
                 ))}
               </div>

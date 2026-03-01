@@ -1,3 +1,5 @@
+'use client'
+
 import {
   ArrowRight,
   BookOpen,
@@ -8,6 +10,16 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function Hero() {
+  const scrollToContact = () => {
+    const contactSection = document.querySelector("#contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <section
       id="hero"
@@ -33,7 +45,7 @@ export default function Hero() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                 </span>
-                Admissions Open 2025-26
+                Admissions Open 2026-27
               </span>
             </div>
 
@@ -54,7 +66,8 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-6 text-sm sm:text-base rounded-xl shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+                onClick={scrollToContact}
+                className="bg-primary hover:bg-primary/90 text-white px-6 sm:px-8 py-6 text-sm sm:text-base rounded-xl shadow-lg hover:shadow-xl transition-all w-full sm:w-auto cursor-pointer"
               >
                 Enquire Now
                 <ArrowRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
