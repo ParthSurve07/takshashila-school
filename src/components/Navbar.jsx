@@ -17,6 +17,7 @@ export default function Navbar() {
     { name: "Academics", href: "#academics" },
     { name: "Gallery", href: "/gallery", isRoute: true },
     { name: "Faculty", href: "/faculty", isRoute: true },
+    { name: "Career", href: "/career", isRoute: true },
     { name: "Admissions", href: "#admissions" },
     { name: "Contact", href: "#contact" },
     { name: "Portal", href: "https://Tissangli.in", external: true },
